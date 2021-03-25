@@ -10,14 +10,13 @@ snp_file = file("$params.assets_bucket/$params.snp_vcf_file")[0]
 tumour_bam = file("$bam_folder/$params.tumour_bam/$params.tumour_bam*.bam")[0]
 tumour_bai = file("$bam_folder/$params.tumour_bam/$params.tumour_bam*.bam.bai")[0]
 
-normal_bam = file("$bam_folder/$params.tumour_bam/results/$params.normal_bam*.sam_filtered-sorted.bam")[0]
-normal_bai = file("$bam_folder/$params.tumour_bam/results/$params.normal_bam*.sam_filtered-sorted.bam.bai")[0]
+normal_bam = file("$bam_folder/$params.normal_bam/$params.normal_bam*.bam")[0]
+normal_bai = file("$bam_folder/$params.normal_bam/$params.normal_bam*.bam.bai")[0]
 
 
 process run_FACETS{
     publishDir output_folder, mode: 'copy'
     
-    container '677424885543.dkr.ecr.ca-central-1.amazonaws.com/mantis:latest'
     disk '50 GB'
     memory = 15.GB
     cpus = 8
