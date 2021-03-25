@@ -31,7 +31,7 @@ process run_FACETS{
         file  "*.tar.gz"
 
     """
-    snp-pileup-wrapper.R -vcf /data/00-common_all.vcf -n ${normal_bam} -t ${tumour_bam} --output-prefix ${params.sample}
+    snp-pileup-wrapper.R -vcf ${snp_file} -n ${normal_bam} -t ${tumour_bam} --output-prefix ${params.sample}
     run-facets-wrapper.R --counts-file ${params.sample}.snp_pileup.gz --sample-id ${params.sample} --purity-cval 1000 --cval 500 --everything
     tar cvzf ${params.sample}.tar.gz ${params.sample}
     """
