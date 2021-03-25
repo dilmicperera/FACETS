@@ -4,7 +4,7 @@ import java.nio.file.Paths
 // Folder with *.bam and *.bai files
 bam_folder="$params.input_bucket/$params.run_folder_id"
 output_folder="$params.output_bucket/$params.output_folder"
-snp_file = file("$params.assets_bucket/$params.snp_vcf_file")[0]
+snp_file = file("$params.assets_bucket/$params.snp_vcf_file")
 
 // Read in bam/bai files
 tumour_bam = file("$bam_folder/$params.tumour_bam/$params.tumour_bam*.bam")[0]
@@ -28,11 +28,11 @@ process run_FACETS{
         file snp_file
         
     output:
-        file  ${$params.sample}*.gz
+        file  "*.gz"
 
     """
-    snp-pileup-wrapper.R -vcf /data/00-common_all.vcf -n ${normal_bam} -t ${tumour_bam} --output-prefix ${$params.sample}
-    run-facets-wrapper.R --counts-file ${$params.sample}.snp_pileup.gz --sample-id ${$params.sample} --purity-cval 1000 --cval 500 --everything
-    gunzip ${$params.sample}
+    snp-pileup-wrapper.R -vcf /data/00-common_all.vcf -n ${normal_bam} -t ${tumour_bam} --output-prefix ${params.sample}
+    run-facets-wrapper.R --counts-file ${params.sample}.snp_pileup.gz --sample-id ${params.sample} --purity-cval 1000 --cval 500 --everything
+    gunzip ${params.sample}
     """
 }
